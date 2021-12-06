@@ -7,10 +7,7 @@ import com.example.H2d2Demo2.model.EmployeeModel;
 import com.example.H2d2Demo2.model.PublicHolidayModel;
 import com.example.H2d2Demo2.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,6 +40,13 @@ public class Controller {
         return employeeService.getDetails();
     }
 
+    @RequestMapping("/getby-id/{id}")
+    public EmployeeEntity getById(@PathVariable int id)
+    {
+        return employeeService.getById(id);
+
+
+    }
 
 
 

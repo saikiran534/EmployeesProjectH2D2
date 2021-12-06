@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -41,14 +42,8 @@ public class EmployeeService {
         entity.setDesignation(employeeModel.getDesignation());
         entity.setSalary(employeeModel.getSalary());
         entity.setAddress(employeeModel.getAddress());
-
-
-
-
 //        entity.getHolidaysEntityList().stream().forEach(x->System.out.println(x.getDescription()));
 //        System.out.println(entity.toString());
-
-
         return employeeRepo.save(entity);
     }
     @Autowired
@@ -73,9 +68,28 @@ public class EmployeeService {
         cEntity.setWorkingHours(companyConfigModel.getWorkingHours());
         return companyRepo.save(cEntity);
     }
+
+
+
+
     public List<EmployeeEntity> getDetails()
     {
 
         return employeeRepo.findAll();
+    }
+
+
+    public EmployeeEntity getById(int id)
+    {
+        Optional<EmployeeEntity> entity = employeeRepo.findById(id);
+        if (entity.isPresent())
+        {
+//            System.out.println(pHolidayRepo.findAll());
+//            System.out.println(companyRepo.findAll());
+//            System.out.println(employeeRepo.findAll());
+            return employeeRepo.getById(id);
+        }
+        return null;
+
     }
 }

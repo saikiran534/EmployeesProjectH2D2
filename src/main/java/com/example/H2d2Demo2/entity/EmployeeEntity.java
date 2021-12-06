@@ -20,7 +20,7 @@ public class EmployeeEntity {
     private int salary;
     @Column
     private String address;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy= "employeeEntity", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy= "employeeEntity", cascade = CascadeType.ALL)
     private List<EmployeeHolidaysEntity> employeeHolidays;
 
     public int getEmployeeId() {
