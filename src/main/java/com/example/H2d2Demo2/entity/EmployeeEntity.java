@@ -1,12 +1,16 @@
 package com.example.H2d2Demo2.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "Employee")
-public class EmployeeEntity {
+@Table(name = "EmployeeEntity")
+public class EmployeeEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int employeeId;
@@ -20,8 +24,22 @@ public class EmployeeEntity {
     private int salary;
     @Column
     private String address;
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JsonManagedReference
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy= "employeeEntity", cascade = CascadeType.ALL)
-    private List<EmployeeHolidaysEntity> employeeHolidays;
+    private List<EmployeeHolidaysEntity> employeeHolidayEntities;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER,mappedBy ="employeeEntity",cascade = CascadeType.ALL)
+    private List<PublicHolidaysEntity> publicHolidayEntities;
+
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JsonManagedReference
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "employeeEntity",cascade = CascadeType.ALL)
+    private List<CompanyConfigEntity> companyConfigEntity;
+
+
 
     public int getEmployeeId() {
         return employeeId;
@@ -71,25 +89,29 @@ public class EmployeeEntity {
         this.address = address;
     }
 
-
     public List<EmployeeHolidaysEntity> getEmployeeHolidays() {
-        return employeeHolidays;
+        return employeeHolidayEntities;
     }
 
-    public void setEmployeeHolidays(List<EmployeeHolidaysEntity> employeeHolidays) {
-        this.employeeHolidays = employeeHolidays;
+    public void setEmployeeHolidays(List<EmployeeHolidaysEntity> employeeHolidayEntities) {
+        this.employeeHolidayEntities = employeeHolidayEntities;
     }
 
-    @Override
-    public String toString() {
-        return "EmployeeEntity{" +
-                "employeeId=" + employeeId +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", designation='" + designation + '\'' +
-                ", salary=" + salary +
-                ", address='" + address + '\'' +
-                ", employeeHolidays=" + employeeHolidays +
-                '}';
+    public List<PublicHolidaysEntity> getPublicHolidays() {
+        return publicHolidayEntities;
     }
+
+    public void setPublicHolidays(List<PublicHolidaysEntity> publicHolidayEntities) {
+        this.publicHolidayEntities = publicHolidayEntities;
+    }
+
+    public List<CompanyConfigEntity> getCompanyConfig() {
+        return companyConfigEntity;
+    }
+
+    public void setCompanyConfig(List<CompanyConfigEntity> companyConfigEntity) {
+        this.companyConfigEntity = companyConfigEntity;
+    }
+
+
 }

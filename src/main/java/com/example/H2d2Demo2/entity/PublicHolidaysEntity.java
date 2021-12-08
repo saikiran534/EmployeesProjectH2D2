@@ -1,11 +1,13 @@
 package com.example.H2d2Demo2.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "publicHolidays")
-public class PublicHolidaysEntity {
+public class PublicHolidaysEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -13,6 +15,13 @@ public class PublicHolidaysEntity {
     private String date;
     @Column
     private String description;
+
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name ="Name",referencedColumnName = "name")
+   // @JsonIgnoreProperties("publicHolidays")
+    @JsonBackReference
+    private EmployeeEntity employeeEntity;
+
 
     public int getId() {
         return id;
@@ -37,4 +46,13 @@ public class PublicHolidaysEntity {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public EmployeeEntity getEmployeeEntity() {
+        return employeeEntity;
+    }
+
+    public void setEmployeeEntity(EmployeeEntity employeeEntity) {
+        this.employeeEntity = employeeEntity;
+    }
+
 }

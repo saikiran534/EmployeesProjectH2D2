@@ -1,6 +1,9 @@
 package com.example.H2d2Demo2.model;
 
+import com.example.H2d2Demo2.entity.CompanyConfigEntity;
+
 import java.util.List;
+import java.util.Optional;
 
 public class EmployeeModel {
     private int id;
@@ -10,6 +13,8 @@ public class EmployeeModel {
     private int salary;
     private String address;
     private List<EmployeeHolidayModel> employeeHolidays;
+    private List<PublicHolidayModel> publicHolidays;
+    private List<CompanyConflictModel> companyConfig;
 
     public int getId() {
         return id;
@@ -65,5 +70,21 @@ public class EmployeeModel {
 
     public void setEmployeeHolidays(List<EmployeeHolidayModel> employeeHolidays) {
         this.employeeHolidays = employeeHolidays;
+    }
+
+    public List<PublicHolidayModel> getPublicHolidays() {
+        return publicHolidays;
+    }
+
+    public void setPublicHolidays(List<PublicHolidayModel> publicHolidays) {
+        this.publicHolidays = publicHolidays;
+    }
+
+    public List<CompanyConflictModel> getCompanyConfig() {
+        return companyConfig;
+    }
+
+    public void setCompanyConfig(List<CompanyConflictModel> companyConfig) {
+        this.companyConfig = companyConfig;
     }
 }

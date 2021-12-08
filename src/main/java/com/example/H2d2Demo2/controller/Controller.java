@@ -1,10 +1,13 @@
 package com.example.H2d2Demo2.controller;
 
 
+import com.example.H2d2Demo2.entity.CompanyConfigEntity;
 import com.example.H2d2Demo2.entity.EmployeeEntity;
+import com.example.H2d2Demo2.entity.PublicHolidaysEntity;
 import com.example.H2d2Demo2.model.CompanyConflictModel;
 import com.example.H2d2Demo2.model.EmployeeModel;
 import com.example.H2d2Demo2.model.PublicHolidayModel;
+import com.example.H2d2Demo2.repository.CompanyConfigRepo;
 import com.example.H2d2Demo2.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,34 +22,44 @@ public class Controller {
 
 
     @PostMapping("/add-details")
-    public EmployeeEntity addData(@RequestBody EmployeeModel employeeModel)
+    public void addData(@RequestBody EmployeeModel employeeModel)
     {
-    return employeeService.addDetails(employeeModel);
+        employeeService.addDetails(employeeModel);
     }
 
-    @PostMapping("/add-publicholidays")
-    public void addPholidays(@RequestBody PublicHolidayModel holidayModel)
-    {
-        employeeService.addPublicHolidays(holidayModel);
-    }
-    @PostMapping("/add-companyconfig")
-    public void addCompany(@RequestBody CompanyConflictModel companyConfig)
-    {
-        employeeService.addCompanyConfig(companyConfig);
-    }
     @RequestMapping("/get-details")
-    public List<EmployeeEntity> getDetails()
+    public List<EmployeeEntity> Details()
     {
         return employeeService.getDetails();
     }
 
-    @RequestMapping("/getby-id/{id}")
-    public EmployeeEntity getById(@PathVariable int id)
+
+//    @RequestMapping("/get-by-id/{id}")
+//    public EmployeeEntity getbyId(@PathVariable int id)
+//    {
+//        return employeeService.getById(id);
+//    }
+
+    @RequestMapping("/get-public-holidays")
+    public List<PublicHolidayModel> PublicHoliday()
     {
-        return employeeService.getById(id);
-
-
+        return employeeService.getPublicHolidays();
     }
+
+    @RequestMapping("get-allcompany")
+    public List<CompanyConflictModel> getAllComp()
+    {
+        return employeeService.getcompany();
+    }
+    @RequestMapping("/get-byId/{id}")
+    public List<EmployeeModel> getId(@PathVariable int id)
+    {
+        return employeeService.getId(id);
+    }
+
+
+
+
 
 
 

@@ -1,12 +1,13 @@
 package com.example.H2d2Demo2.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "EmployeeHolidays")
-public class EmployeeHolidaysEntity {
+@Table(name = "EmployeeHolidaysEntity")
+public class EmployeeHolidaysEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -19,7 +20,9 @@ public class EmployeeHolidaysEntity {
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "employeeId", referencedColumnName = "employeeId")
-    @JsonIgnoreProperties("employeeHolidays")
+    //@JsonIgnoreProperties("employeeHolidays")
+    @JsonBackReference
+
     private EmployeeEntity employeeEntity;
 
     public int getId() {
@@ -62,13 +65,4 @@ public class EmployeeHolidaysEntity {
         this.employeeEntity = employeeEntity;
     }
 
-    @Override
-    public String toString() {
-        return "EmployeeHolidaysEntity{" +
-                "fromDate='" + fromDate + '\'' +
-                ", toDate='" + toDate + '\'' +
-                ", description='" + description + '\'' +
-                ", employeeEntity=" + employeeEntity +
-                '}';
-    }
 }
