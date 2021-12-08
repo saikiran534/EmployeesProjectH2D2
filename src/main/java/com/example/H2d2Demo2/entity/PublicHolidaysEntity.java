@@ -16,11 +16,11 @@ public class PublicHolidaysEntity implements Serializable {
     @Column
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name ="Name",referencedColumnName = "name")
-   // @JsonIgnoreProperties("publicHolidays")
-    @JsonBackReference
-    private EmployeeEntity employeeEntity;
+//    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+//    @JoinColumn(name ="Name",referencedColumnName = "name")
+//   // @JsonIgnoreProperties("publicHolidays")
+//    @JsonBackReference
+// private EmployeeEntity employeeEntity;
 
 
     public int getId() {
@@ -47,12 +47,12 @@ public class PublicHolidaysEntity implements Serializable {
         this.description = description;
     }
 
-    public EmployeeEntity getEmployeeEntity() {
-        return employeeEntity;
-    }
-
-    public void setEmployeeEntity(EmployeeEntity employeeEntity) {
-        this.employeeEntity = employeeEntity;
-    }
+//    public EmployeeEntity getEmployeeEntity() {
+//        return employeeEntity;
+//    }
+//
+//    public void setEmployeeEntity(EmployeeEntity employeeEntity) {
+//        this.employeeEntity = employeeEntity;
+//    }
 
 }

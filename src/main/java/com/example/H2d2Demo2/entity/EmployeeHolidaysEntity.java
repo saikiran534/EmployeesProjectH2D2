@@ -1,6 +1,7 @@
 package com.example.H2d2Demo2.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,11 +18,11 @@ public class EmployeeHolidaysEntity implements Serializable {
     private String toDate;
     @Column
     private String description;
-
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "employeeId", referencedColumnName = "employeeId")
     //@JsonIgnoreProperties("employeeHolidays")
-    @JsonBackReference
+
 
     private EmployeeEntity employeeEntity;
 

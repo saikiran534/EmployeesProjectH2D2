@@ -14,13 +14,13 @@ public class CompanyConfigEntity {
     private int numberOfHolidays;
     @Column
     private int workingHours;
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+//    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+//
+//    @JoinColumn(name = "Name",referencedColumnName = "name")
+////    @JsonIgnoreProperties("companyConfig")
+//    @JsonBackReference
 
-    @JoinColumn(name = "Name",referencedColumnName = "name")
-//    @JsonIgnoreProperties("companyConfig")
-    @JsonBackReference
-
-    private EmployeeEntity employeeEntity;
+//    private EmployeeEntity employeeEntity;
 
     public int getId() {
         return id;
@@ -46,12 +46,12 @@ public class CompanyConfigEntity {
         this.workingHours = workingHours;
     }
 
-    public EmployeeEntity getEmployeeEntity() {
-        return employeeEntity;
-    }
-
-    public void setEmployeeEntity(EmployeeEntity employeeEntity) {
-        this.employeeEntity = employeeEntity;
-    }
+//    public EmployeeEntity getEmployeeEntity() {
+//        return employeeEntity;
+//    }
+//
+//    public void setEmployeeEntity(EmployeeEntity employeeEntity) {
+//        this.employeeEntity = employeeEntity;
+//    }
 
 }

@@ -30,15 +30,15 @@ public class EmployeeEntity implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy= "employeeEntity", cascade = CascadeType.ALL)
     private List<EmployeeHolidaysEntity> employeeHolidayEntities;
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER,mappedBy ="employeeEntity",cascade = CascadeType.ALL)
-    private List<PublicHolidaysEntity> publicHolidayEntities;
-
-    @Fetch(value = FetchMode.SUBSELECT)
-    @JsonManagedReference
-
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "employeeEntity",cascade = CascadeType.ALL)
-    private List<CompanyConfigEntity> companyConfigEntity;
-
+//    @OneToMany(fetch = FetchType.EAGER,mappedBy ="employeeEntity",cascade = CascadeType.ALL)
+//    private List<PublicHolidaysEntity> publicHolidayEntities;
+//
+//    @Fetch(value = FetchMode.SUBSELECT)
+//    @JsonManagedReference
+//
+//    @OneToMany(fetch = FetchType.EAGER,mappedBy = "employeeEntity",cascade = CascadeType.ALL)
+//    private List<CompanyConfigEntity> companyConfigEntity;
+//
 
 
     public int getEmployeeId() {
@@ -96,22 +96,22 @@ public class EmployeeEntity implements Serializable {
     public void setEmployeeHolidays(List<EmployeeHolidaysEntity> employeeHolidayEntities) {
         this.employeeHolidayEntities = employeeHolidayEntities;
     }
-
-    public List<PublicHolidaysEntity> getPublicHolidays() {
-        return publicHolidayEntities;
-    }
-
-    public void setPublicHolidays(List<PublicHolidaysEntity> publicHolidayEntities) {
-        this.publicHolidayEntities = publicHolidayEntities;
-    }
-
-    public List<CompanyConfigEntity> getCompanyConfig() {
-        return companyConfigEntity;
-    }
-
-    public void setCompanyConfig(List<CompanyConfigEntity> companyConfigEntity) {
-        this.companyConfigEntity = companyConfigEntity;
-    }
+//
+//    public List<PublicHolidaysEntity> getPublicHolidays() {
+//        return publicHolidayEntities;
+//    }
+//
+//    public void setPublicHolidays(List<PublicHolidaysEntity> publicHolidayEntities) {
+//        this.publicHolidayEntities = publicHolidayEntities;
+//    }
+//
+//    public List<CompanyConfigEntity> getCompanyConfig() {
+//        return companyConfigEntity;
+//    }
+//
+//    public void setCompanyConfig(List<CompanyConfigEntity> companyConfigEntity) {
+//        this.companyConfigEntity = companyConfigEntity;
+//    }
 
 
 }

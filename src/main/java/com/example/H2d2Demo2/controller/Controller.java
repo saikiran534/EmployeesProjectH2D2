@@ -27,11 +27,11 @@ public class Controller {
         employeeService.addDetails(employeeModel);
     }
 
-    @RequestMapping("/get-details")
-    public List<EmployeeEntity> Details()
-    {
-        return employeeService.getDetails();
-    }
+//    @RequestMapping("/get-details")
+//    public List<EmployeeEntity> Details()
+//    {
+//        return employeeService.getDetails();
+//    }
 
 
 //    @RequestMapping("/get-by-id/{id}")
@@ -39,6 +39,20 @@ public class Controller {
 //    {
 //        return employeeService.getById(id);
 //    }
+    @PostMapping("/add-public-holiday")
+    public void addPublicHoliday(@RequestBody PublicHolidayModel publicHolidayModel)
+    {
+        employeeService.addPHoliday(publicHolidayModel);
+    }
+    @RequestMapping("/add-company-configurations")
+    public void addCompanyConfigurations(@RequestBody CompanyConflictModel companyConfigModel)
+    {
+        employeeService.addCompany(companyConfigModel);
+    }
+
+
+
+
 
     @RequestMapping("/get-public-holidays")
     public List<PublicHolidayModel> PublicHoliday()
@@ -46,7 +60,7 @@ public class Controller {
         return employeeService.getPublicHolidays();
     }
 
-    @RequestMapping("get-allcompany")
+        @RequestMapping("get-allcompany")
     public List<CompanyConflictModel> getAllComp()
     {
         return employeeService.getcompany();
@@ -55,6 +69,11 @@ public class Controller {
     public List<EmployeeModel> getId(@PathVariable int id)
     {
         return employeeService.getId(id);
+    }
+    @RequestMapping("/get-all")
+    public List<EmployeeModel> getall()
+    {
+        return employeeService.getall();
     }
 
 
