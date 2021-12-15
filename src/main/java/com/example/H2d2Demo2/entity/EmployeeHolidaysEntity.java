@@ -1,7 +1,6 @@
 package com.example.H2d2Demo2.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,8 +9,8 @@ import java.io.Serializable;
 @Table(name = "EmployeeHolidaysEntity")
 public class EmployeeHolidaysEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int employeeId;
     @Column
     private String fromDate;
     @Column
@@ -20,18 +19,18 @@ public class EmployeeHolidaysEntity implements Serializable {
     private String description;
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "employeeId", referencedColumnName = "employeeId")
+
     //@JsonIgnoreProperties("employeeHolidays")
 
 
     private EmployeeEntity employeeEntity;
 
-    public int getId() {
-        return id;
+    public int getEmployeeId() {
+        return employeeId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getFromDate() {

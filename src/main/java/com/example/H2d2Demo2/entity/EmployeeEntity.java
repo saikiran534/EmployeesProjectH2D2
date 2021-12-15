@@ -1,8 +1,6 @@
 package com.example.H2d2Demo2.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,9 +8,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "EmployeeEntity")
-public class EmployeeEntity implements Serializable {
+public class    EmployeeEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int employeeId;
     @Column
     private String name;
@@ -24,21 +22,15 @@ public class EmployeeEntity implements Serializable {
     private int salary;
     @Column
     private String address;
-    @Fetch(value = FetchMode.SUBSELECT)
-    @JsonManagedReference
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy= "employeeEntity", cascade = CascadeType.ALL)
-    private List<EmployeeHolidaysEntity> employeeHolidayEntities;
+
     @JsonManagedReference
-//    @OneToMany(fetch = FetchType.EAGER,mappedBy ="employeeEntity",cascade = CascadeType.ALL)
-//    private List<PublicHolidaysEntity> publicHolidayEntities;
-//
-//    @Fetch(value = FetchMode.SUBSELECT)
+    @JoinColumn(referencedColumnName = "employeeId")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,targetEntity = EmployeeHolidaysEntity.class)
+
+    private List<EmployeeHolidaysEntity> employeeHolidayEntities;
 //    @JsonManagedReference
-//
-//    @OneToMany(fetch = FetchType.EAGER,mappedBy = "employeeEntity",cascade = CascadeType.ALL)
-//    private List<CompanyConfigEntity> companyConfigEntity;
-//
+//    @OneToOne(cascade = CascadeType.ALL)
 
 
     public int getEmployeeId() {
@@ -96,22 +88,7 @@ public class EmployeeEntity implements Serializable {
     public void setEmployeeHolidays(List<EmployeeHolidaysEntity> employeeHolidayEntities) {
         this.employeeHolidayEntities = employeeHolidayEntities;
     }
-//
-//    public List<PublicHolidaysEntity> getPublicHolidays() {
-//        return publicHolidayEntities;
-//    }
-//
-//    public void setPublicHolidays(List<PublicHolidaysEntity> publicHolidayEntities) {
-//        this.publicHolidayEntities = publicHolidayEntities;
-//    }
-//
-//    public List<CompanyConfigEntity> getCompanyConfig() {
-//        return companyConfigEntity;
-//    }
-//
-//    public void setCompanyConfig(List<CompanyConfigEntity> companyConfigEntity) {
-//        this.companyConfigEntity = companyConfigEntity;
-//    }
+
 
 
 }

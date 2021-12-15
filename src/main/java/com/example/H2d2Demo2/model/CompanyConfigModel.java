@@ -1,6 +1,6 @@
 package com.example.H2d2Demo2.model;
 
-public class CompanyConflictModel {
+public class CompanyConfigModel {
     private int noOfHolidays;
     private int workingHours;
 
