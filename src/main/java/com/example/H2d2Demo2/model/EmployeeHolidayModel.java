@@ -1,23 +1,27 @@
 package com.example.H2d2Demo2.model;
 
-public class EmployeeHolidayModel {
-    private String fromDate;
-    private String toDate;
-    private String description;
+import java.time.LocalDate;
+import java.time.Period;
 
-    public String getFromDate() {
+public class EmployeeHolidayModel {
+    private LocalDate fromDate;
+    private LocalDate toDate;
+    private String description;
+    private long noOfDays;
+
+    public LocalDate getFromDate() {
         return fromDate;
     }
 
-    public void setFromDate(String fromDate) {
+    public void setFromDate(LocalDate fromDate) {
         this.fromDate = fromDate;
     }
 
-    public String getToDate() {
+    public LocalDate getToDate() {
         return toDate;
     }
 
-    public void setToDate(String toDate) {
+    public void setToDate(LocalDate toDate) {
         this.toDate = toDate;
     }
 
@@ -27,5 +31,13 @@ public class EmployeeHolidayModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public long getNoOfDays() {
+        return noOfDays;
+    }
+
+    public void setNoOfDays(long noOfDays) {
+        this.noOfDays = noOfDays;
     }
 }

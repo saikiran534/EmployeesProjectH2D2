@@ -26,81 +26,80 @@ public class EmployeeService {
     private CompanyConfigRepo companyConfigurationRepo;
     @Autowired
     private EmployeeHolidaysRepo holidaysRepo;
-   ///**List Conversion to model **///
-   ///To get Converted List of EmployeeHoliday out from the stream we need to take an empty list before writing the stream ///
-   public EmployeeEntity addDetails(EmployeeModel employeeModel) {
-       EmployeeEntity entity = new EmployeeEntity();
+
+    ///**List Conversion to model **///
+    ///To get Converted List of EmployeeHoliday out from the stream we need to take an empty list before writing the stream ///
+    public EmployeeEntity addDetails(EmployeeModel employeeModel) {
+        EmployeeEntity entity = new EmployeeEntity();
 
         List<EmployeeEntity> check = employeeRepo.findAll();
 
 
-           List<EmployeeHolidaysEntity> empEntity = new ArrayList<>();
-           employeeModel.getEmployeeHolidays().stream().forEach(x ->
-           {
-               EmployeeHolidaysEntity holidayEntity = new EmployeeHolidaysEntity();
-               holidayEntity.setFromDate(x.getFromDate());
-               holidayEntity.setToDate(x.getToDate());
-               holidayEntity.setDescription(x.getDescription());
-               holidayEntity.setEmployeeEntity(entity);
+        List<EmployeeHolidaysEntity> empEntity = new ArrayList<>();
+        employeeModel.getEmployeeHolidays().stream().forEach(x ->
+        {
+            EmployeeHolidaysEntity holidayEntity = new EmployeeHolidaysEntity();
+            holidayEntity.setFromDate(x.getFromDate());
+            holidayEntity.setToDate(x.getToDate());
+            long days = ChronoUnit.DAYS.between(x.getFromDate(), x.getToDate());
+            holidayEntity.setNoOfDays((int) days);
+            holidayEntity.setDescription(x.getDescription());
+            holidayEntity.setEmployeeEntity(entity);
 
-               empEntity.add(holidayEntity);
-           });
+            empEntity.add(holidayEntity);
+        });
 
-           entity.setName(employeeModel.getName());
-           entity.setEmail(employeeModel.getEmail());
-           entity.setDesignation(employeeModel.getDesignation());
-           entity.setSalary(employeeModel.getSalary());
-           entity.setAddress(employeeModel.getAddress());
-           entity.setEmployeeHolidays(empEntity);
+        entity.setName(employeeModel.getName());
+        entity.setEmail(employeeModel.getEmail());
+        entity.setDesignation(employeeModel.getDesignation());
+        entity.setSalary(employeeModel.getSalary());
+        entity.setAddress(employeeModel.getAddress());
+        entity.setEmployeeHolidayEntities(empEntity);
 
-           return employeeRepo.save(entity);
-       }
+        return employeeRepo.save(entity);
+    }
 
 
-    public PublicHolidaysEntity addPHoliday(PublicHolidayModel publicHolidayModel)
-    {
+    public PublicHolidaysEntity addPHoliday(PublicHolidayModel publicHolidayModel) {
         PublicHolidaysEntity holiday = new PublicHolidaysEntity();
         holiday.setDate(publicHolidayModel.getDate());
         holiday.setDescription(publicHolidayModel.getDescription());
         return publicHolidayRepo.save(holiday);
     }
 
-    public CompanyConfigEntity addCompany(CompanyConfigModel companyConfigModel)
-    {
+    public CompanyConfigEntity addCompany(CompanyConfigModel companyConfigModel) {
         CompanyConfigEntity company = new CompanyConfigEntity();
         company.setNumberOfHolidays(companyConfigModel.getNoOfHolidays());
         company.setWorkingHours(companyConfigModel.getWorkingHours());
         return companyConfigurationRepo.save(company);
     }
 
-    public List<EmployeeModel> getId(int id)
-    {
+    public List<EmployeeModel> getId(int id) {
         Optional<EmployeeEntity> eEntity = employeeRepo.findById(id);
-        if(eEntity.isPresent())
-        {
+        if (eEntity.isPresent()) {
             Optional<EmployeeEntity> employeeEntityList = employeeRepo.findById(id);
-            List<EmployeeModel> eModel = new ArrayList<>();
-            return employeeEntityList.stream().map(details->modelToEntity(details)).collect(Collectors.toList());
-
+            List<EmployeeModel> eModel = employeeEntityList.stream().map(details -> modelToEntity(details)).collect(Collectors.toList());
+            return eModel;
         }
         return null;
     }
+
     public List<EmployeeModel> getall() {
         List<EmployeeEntity> employeeEntityList = employeeRepo.findAll();
         List<EmployeeModel> eModel = new ArrayList<>();
-        return employeeEntityList.stream().map(value->modelToEntity(value)).collect(Collectors.toList());
+        return employeeEntityList.stream().map(value -> modelToEntity(value)).collect(Collectors.toList());
     }
 
     public List<PublicHolidayModel> getPublicHolidays() {
         List<PublicHolidaysEntity> holidayEntity = publicHolidayRepo.findAll();
-        return holidayEntity.stream().map(details->holidayModeltoEntity(details)).collect(Collectors.toList());
+        return holidayEntity.stream().map(details -> holidayModeltoEntity(details)).collect(Collectors.toList());
 
     }
 
 
     public List<CompanyConfigModel> getcompany() {
         List<CompanyConfigEntity> config = companyConfigurationRepo.findAll();
-        List<CompanyConfigModel>  compModel = new ArrayList<>();
+        List<CompanyConfigModel> compModel = new ArrayList<>();
         config.stream().forEach(value ->
                 {
                     CompanyConfigModel model = new CompanyConfigModel();
@@ -111,8 +110,8 @@ public class EmployeeService {
         );
         return compModel;
     }
-    public PublicHolidayModel holidayModeltoEntity(PublicHolidaysEntity holidayEntity)
-    {
+
+    public PublicHolidayModel holidayModeltoEntity(PublicHolidaysEntity holidayEntity) {
         PublicHolidayModel holidayModel = new PublicHolidayModel();
         holidayModel.setDate(holidayModel.getDate());
         holidayModel.setDescription(holidayEntity.getDescription());
@@ -120,24 +119,28 @@ public class EmployeeService {
 
     }
 
-    public EmployeeModel modelToEntity(EmployeeEntity entity)
-    {
+    public EmployeeModel modelToEntity(EmployeeEntity entity) {
         EmployeeModel model = new EmployeeModel();
         model.setEmployeeId(entity.getEmployeeId());
         model.setName(entity.getName());
         model.setEmail(entity.getEmail());
         model.setDesignation(entity.getDesignation());
+        model.setAddress(entity.getAddress());
         model.setSalary(entity.getSalary());
-        model.setDesignation(entity.getAddress());
 
 
         List<EmployeeHolidayModel> holidayModel = new ArrayList<>();
-        entity.getEmployeeHolidays().stream().forEach(value->
+        entity.getEmployeeHolidayEntities().stream().forEach(value ->
         {
             EmployeeHolidayModel hModel = new EmployeeHolidayModel();
+
+
             hModel.setFromDate(value.getFromDate());
             hModel.setToDate(value.getToDate());
+            long days = ChronoUnit.DAYS.between(value.getFromDate(), value.getToDate());
+            hModel.setNoOfDays(days);
             hModel.setDescription(value.getDescription());
+
             model.setEmployeeHolidays(holidayModel);
             holidayModel.add(hModel);
         });
@@ -145,15 +148,15 @@ public class EmployeeService {
     }
 
     public SalaryEntity addSalary(SalaryModel salaryModel) {
-       SalaryEntity sEntity = new SalaryEntity();
-       sEntity.setId(salaryModel.getId());
-       sEntity.setName(salaryModel.getName());
-       sEntity.setMonthlySalary(salaryModel.getMonthlySalary());
-       sEntity.setYearlyPackage(salaryModel.getYearlyPackage());
-       return salaryRepo.save(sEntity);
+        SalaryEntity sEntity = new SalaryEntity();
+        sEntity.setId(salaryModel.getId());
+        sEntity.setName(salaryModel.getName());
+        sEntity.setMonthlySalary(salaryModel.getMonthlySalary());
+        sEntity.setYearlyPackage(salaryModel.getYearlyPackage());
+        return salaryRepo.save(sEntity);
     }
-    public SalaryModel conversion(SalaryEntity salaryEntity)
-    {
+
+    public SalaryModel conversion(SalaryEntity salaryEntity) {
         SalaryModel model = new SalaryModel();
         model.setId(salaryEntity.getId());
         model.setName(salaryEntity.getName());
@@ -161,38 +164,29 @@ public class EmployeeService {
         model.setYearlyPackage(salaryEntity.getYearlyPackage());
         return model;
     }
+
     public List<SalaryModel> getSalary() {
         List<SalaryEntity> sEntity = salaryRepo.findAll();
-        return sEntity.stream().map(value->conversion(value)).collect(Collectors.toList());
-    }
-    public List<SalaryModel> getSalaryById(String name) {
-        List<SalaryEntity> idEntity = salaryRepo.findAll();
-        return idEntity.stream().filter(value-> value.getName().equals(name)).map(info->conversion(info)).collect(Collectors.toList());
+        return sEntity.stream().map(value -> conversion(value)).collect(Collectors.toList());
     }
 
-    public long date(int id ) {
-       Optional<EmployeeEntity> data = employeeRepo.findById(id);
-       List<EmployeeModel> sai = data.stream().map(value-> modelToEntity(value)).collect(Collectors.toList());
-       List<String> fromList = new ArrayList();
-       List<String > toList = new ArrayList();
-       sai.stream().forEach(value->{
-           value.getEmployeeHolidays().stream().forEach(x->{
-               fromList.add(x.getFromDate());
-           });
-       });
-       sai.stream().forEach(value->
-       {
-           value.getEmployeeHolidays().stream().forEach(y->
-           {
-               toList.add(y.getToDate());
-           });
-       });
-        DateTimeFormatter formatter_1 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        String s1 = fromList.toString();
-        String s2 = toList.toString();
-        LocalDate d1 =LocalDate.parse(s1,formatter_1);
-        LocalDate d2 = LocalDate.parse(s2,formatter_1);
-        long deference = ChronoUnit.DAYS.between(d1,d2);
-       return deference;
+    public List<SalaryModel> getSalaryById(String name) {
+        List<SalaryEntity> idEntity = salaryRepo.findAll();
+        return idEntity.stream().filter(value -> value.getName().equals(name)).map(info -> conversion(info)).collect(Collectors.toList());
+    }
+
+
+    //    public long date(int id ) {
+//       Optional<EmployeeEntity> data = employeeRepo.findById(id);
+//       List<EmployeeModel> sai = data.stream().map(value-> modelToEntity(value)).collect(Collectors.toList());
+//
+//       return deference;
+//    }
+    public List pendingLeaves(int id) {
+        Optional<EmployeeEntity> details = employeeRepo.findById(id);
+        List a = details.get().getEmployeeHolidayEntities().stream().filter(y->y.getEmployeeId()==id).collect(Collectors.toList());
+        System.out.println(a.size());
+//            long from = holidays.stream().forEach(value -> value.)
+        return a;
     }
 }

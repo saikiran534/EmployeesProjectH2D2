@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "EmployeeEntity")
 public class    EmployeeEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int employeeId;
     @Column
     private String name;
@@ -25,7 +25,7 @@ public class    EmployeeEntity implements Serializable {
 
 
     @JsonManagedReference
-    @JoinColumn(referencedColumnName = "employeeId")
+    //@JoinColumn(referencedColumnName = "employeeId")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,targetEntity = EmployeeHolidaysEntity.class)
 
     private List<EmployeeHolidaysEntity> employeeHolidayEntities;
@@ -81,14 +81,11 @@ public class    EmployeeEntity implements Serializable {
         this.address = address;
     }
 
-    public List<EmployeeHolidaysEntity> getEmployeeHolidays() {
+    public List<EmployeeHolidaysEntity> getEmployeeHolidayEntities() {
         return employeeHolidayEntities;
     }
 
-    public void setEmployeeHolidays(List<EmployeeHolidaysEntity> employeeHolidayEntities) {
+    public void setEmployeeHolidayEntities(List<EmployeeHolidaysEntity> employeeHolidayEntities) {
         this.employeeHolidayEntities = employeeHolidayEntities;
     }
-
-
-
 }

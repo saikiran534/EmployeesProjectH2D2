@@ -1,4 +1,5 @@
 package com.example.H2d2Demo2.controller;
+import com.example.H2d2Demo2.entity.EmployeeHolidaysEntity;
 import com.example.H2d2Demo2.model.CompanyConfigModel;
 import com.example.H2d2Demo2.model.EmployeeModel;
 import com.example.H2d2Demo2.model.PublicHolidayModel;
@@ -65,9 +66,9 @@ public class Controller {
         return employeeService.getSalaryById(name);
     }
 
-    @RequestMapping("/date/{id}")
-    public long date(@PathVariable int id )
+    @RequestMapping("/pending/{id}")
+    public List pending(@PathVariable int id )
     {
-        return employeeService.date(id);
+        return employeeService.pendingLeaves(id);
     }
 }

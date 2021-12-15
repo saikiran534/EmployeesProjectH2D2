@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "EmployeeHolidaysEntity")
@@ -12,17 +13,16 @@ public class EmployeeHolidaysEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int employeeId;
     @Column
-    private String fromDate;
+    private LocalDate fromDate;
     @Column
-    private String toDate;
+    private LocalDate toDate;
+    @Column
+    private int noOfDays;
+
     @Column
     private String description;
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-
-    //@JsonIgnoreProperties("employeeHolidays")
-
-
     private EmployeeEntity employeeEntity;
 
     public int getEmployeeId() {
@@ -33,20 +33,28 @@ public class EmployeeHolidaysEntity implements Serializable {
         this.employeeId = employeeId;
     }
 
-    public String getFromDate() {
+    public LocalDate getFromDate() {
         return fromDate;
     }
 
-    public void setFromDate(String fromDate) {
+    public void setFromDate(LocalDate fromDate) {
         this.fromDate = fromDate;
     }
 
-    public String getToDate() {
+    public LocalDate getToDate() {
         return toDate;
     }
 
-    public void setToDate(String toDate) {
+    public void setToDate(LocalDate toDate) {
         this.toDate = toDate;
+    }
+
+    public int getNoOfDays() {
+        return noOfDays;
+    }
+
+    public void setNoOfDays(int noOfDays) {
+        this.noOfDays = noOfDays;
     }
 
     public String getDescription() {
