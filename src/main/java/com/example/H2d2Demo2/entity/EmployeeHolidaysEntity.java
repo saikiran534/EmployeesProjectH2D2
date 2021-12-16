@@ -10,9 +10,9 @@ import java.time.LocalDate;
 @Table(name = "EmployeeHolidaysEntity")
 public class EmployeeHolidaysEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int employeeId;
-    @Column
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private int employeeId;
+//    @Column
     private LocalDate fromDate;
     @Column
     private LocalDate toDate;
@@ -25,13 +25,13 @@ public class EmployeeHolidaysEntity implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private EmployeeEntity employeeEntity;
 
-    public int getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
-    }
+//    public int getEmployeeId() {
+//        return employeeId;
+//    }
+//
+//    public void setEmployeeId(int employeeId) {
+//        this.employeeId = employeeId;
+//    }
 
     public LocalDate getFromDate() {
         return fromDate;

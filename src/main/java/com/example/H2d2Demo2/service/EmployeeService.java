@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,11 +42,10 @@ public class EmployeeService {
             EmployeeHolidaysEntity holidayEntity = new EmployeeHolidaysEntity();
             holidayEntity.setFromDate(x.getFromDate());
             holidayEntity.setToDate(x.getToDate());
-            long days = ChronoUnit.DAYS.between(x.getFromDate(), x.getToDate());
-            holidayEntity.setNoOfDays((int) days);
+            long noofdays= ChronoUnit.DAYS.between(x.getFromDate(),x.getToDate());
+            holidayEntity.setNoOfDays((int) noofdays);
             holidayEntity.setDescription(x.getDescription());
             holidayEntity.setEmployeeEntity(entity);
-
             empEntity.add(holidayEntity);
         });
 
@@ -184,9 +184,14 @@ public class EmployeeService {
 //    }
     public List pendingLeaves(int id) {
         Optional<EmployeeEntity> details = employeeRepo.findById(id);
-        List a = details.get().getEmployeeHolidayEntities().stream().filter(y->y.getEmployeeId()==id).collect(Collectors.toList());
-        System.out.println(a.size());
+        //System.out.println(details.get().getEmployeeHolidayEntities().stream().collect(Collectors.toList()));
+        int a = details.get().getEmployeeHolidayEntities().stream().filter(y->y.getEmployeeEntity().getEmployeeId()==details.get().getEmployeeId()).mapToInt(m->m.getNoOfDays()).sum();
+        List<CompanyConfigEntity> val = companyConfigurationRepo.findAll();
+        int b = val.get(0).getNumberOfHolidays();
+        System.out.println(b);
+        int pending_leaves = b-a;
+        //System.out.println(a.size());
 //            long from = holidays.stream().forEach(value -> value.)
-        return a;
+        return Collections.singletonList("employee of ID: " + id + "; no of holidays taken : "+a+"; Pending Leaves = "+ pending_leaves);
     }
 }

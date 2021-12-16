@@ -40,4 +40,14 @@ public class EmployeeHolidayModel {
     public void setNoOfDays(long noOfDays) {
         this.noOfDays = noOfDays;
     }
+
+    @Override
+    public String toString() {
+        return "EmployeeHolidayModel{" +
+                "fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                ", description='" + description + '\'' +
+                ", noOfDays=" + noOfDays +
+                '}';
+    }
 }
