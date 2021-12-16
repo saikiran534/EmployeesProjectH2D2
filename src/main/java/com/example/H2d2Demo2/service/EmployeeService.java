@@ -4,9 +4,6 @@ import com.example.H2d2Demo2.model.*;
 import com.example.H2d2Demo2.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -176,22 +173,19 @@ public class EmployeeService {
     }
 
 
-    //    public long date(int id ) {
-//       Optional<EmployeeEntity> data = employeeRepo.findById(id);
-//       List<EmployeeModel> sai = data.stream().map(value-> modelToEntity(value)).collect(Collectors.toList());
-//
-//       return deference;
-//    }
     public List pendingLeaves(int id) {
         Optional<EmployeeEntity> details = employeeRepo.findById(id);
         //System.out.println(details.get().getEmployeeHolidayEntities().stream().collect(Collectors.toList()));
         int a = details.get().getEmployeeHolidayEntities().stream().filter(y->y.getEmployeeEntity().getEmployeeId()==details.get().getEmployeeId()).mapToInt(m->m.getNoOfDays()).sum();
         List<CompanyConfigEntity> val = companyConfigurationRepo.findAll();
         int b = val.get(0).getNumberOfHolidays();
-        System.out.println(b);
+        // System.out.println(b);
         int pending_leaves = b-a;
         //System.out.println(a.size());
-//            long from = holidays.stream().forEach(value -> value.)
-        return Collections.singletonList("employee of ID: " + id + "; no of holidays taken : "+a+"; Pending Leaves = "+ pending_leaves);
+        //long from = holidays.stream().forEach(value -> value.)
+        return Collections.singletonList("employee of ID: " + id +";Employee name: "+details.get().getName() + "; no of holidays taken : "+a+"; Pending Leaves = "+ pending_leaves);
     }
+
+
+
 }
